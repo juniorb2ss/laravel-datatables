@@ -40,7 +40,7 @@ class Datatables
      */
     public function __construct(Request $request)
     {
-        $this->request = $request->request->count() ? $request : Request::capture();
+        $this->request = $request->request->count() ? $request : $request->createFromBase(app('Illuminate\Http\Request'));
     }
 
     /**
@@ -51,7 +51,7 @@ class Datatables
      */
     public static function of($builder)
     {
-        $datatables          = (isset($this) ? $this : app('Yajra\Datatables\Datatables')); # call statically?
+        $datatables          = app('Yajra\Datatables\Datatables'); # call statically?
         $datatables->builder = $builder;
 
         if ($builder instanceof QueryBuilder) {
